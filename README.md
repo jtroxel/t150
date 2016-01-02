@@ -1,78 +1,162 @@
-Snowflake ![snowflake](https://cloud.githubusercontent.com/assets/1282364/11599365/1a1c39d2-9a8c-11e5-8819-bc1e48b30525.png)
-==================================
-#### A React-Native starter mobile app for iOS and Android with a single code base.  Using Redux and Immutable, the state of the application is fully testable with Jest, currently at 86% coverage. Snowflake supports Hot Reloading of its state.  Snowflake uses CI with [Bitrise.io]( https://www.bitrise.io) and has extensive docs and 45+ min of video demonstrating implementation.
+## React Starter Kit — "isomorphic" web app boilerplate
 
-[![Join the chat at https://gitter.im/bartonhammond/snowflake](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/bartonhammond/snowflake?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-![ios](https://img.shields.io/badge/IOS--blue.svg) [![Build Status](https://www.bitrise.io/app/348ae0a97c5e147a.svg?token=RmDwzjeIGuo7i9MeazE1fg)](https://www.bitrise.io/app/348ae0a97c5e147a)
-![andriod](https://img.shields.io/badge/Android--blue.svg) [![Build Status](https://www.bitrise.io/app/1e0425744dcc7ce3.svg?token=uvZDZvo89BLXvjrArJJreQ)](https://www.bitrise.io/app/1e0425744dcc7ce3)
-[![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/bartonhammond/snowflake/blob/master/LICENSE)
+[![Support us on Bountysource](https://dl.dropboxusercontent.com/u/16006521/react-starter-kit/banner.png)](https://salt.bountysource.com/teams/react-starter-kit)<br>
 
-# Content
+> [React Starter Kit](http://www.reactstarterkit.com) is an opinionated
+> boilerplate for web development built on top of Facebook's
+> [React](https://facebook.github.io/react/) library,
+> [Node.js](https://nodejs.org/) / [Express](http://expressjs.com/) server
+> and [Flux](http://facebook.github.io/flux/) architecture. Containing
+> modern web development tools such as [Webpack](http://webpack.github.io/),
+> [Babel](http://babeljs.io/) and [BrowserSync](http://www.browsersync.io/).
+> Helping you to stay productive following the best practices. A solid starting
+> point for both professionals and newcomers to the industry.
 
-- [Screens](#screens)
-- [Summary](#summary)
-- [Hot Reloading](#hot-reloading)
-- [Continuous Integration - Bitrise.io](#continuous-integration)
-- [Source documentation](http://bartonhammond.github.io/snowflake/snowflake.js.html)
-- [Technologies](docs/Technologies.md)
-- [Setup](docs/Setup.md)
-- [Redux State Management](docs/ReduxStateManagement.md)
-- [FAQ](docs/FAQ.md)
+Demo: http://demo.reactstarterkit.com &nbsp;|&nbsp;
+Join [#react-starter-kit](https://gitter.im/kriasoft/react-starter-kit) chatroom on Gitter to stay up to date.
 
-----------
+### Documentation
 
-## Screens
+  * **General**
+    - [React Style Guide](./docs/react-style-guide.md)
+    - [How to configure text editors and IDEs](./docs/how-to-configure-text-editors.md)
+  * **Questions**
+    - [Which module bundler should I use?](https://github.com/kriasoft/react-starter-kit/issues/3)
+    - [Which Flux implementation should I use?](https://github.com/kriasoft/react-starter-kit/issues/22)
+  * **Recipes**
+    - [How to Implement Routing and Navigation](./docs/recipes/how-to-implement-routing.md)
+    - [How to Integrate Disqus](./docs/recipes/how-to-integrate-disqus.md)
 
-| Platform| Register     | Login | Profile   |
-| :------:| :-------: | :----: | :---: |
-| iOS|  ![ios Profile](https://cloud.githubusercontent.com/assets/1282364/11598478/b2b1b5e6-9a87-11e5-8be9-37cbfa478a71.gif)  | ![ios Login](https://cloud.githubusercontent.com/assets/1282364/11598580/6d360f02-9a88-11e5-836b-4171f789a41d.gif)| ![ios Register](https://cloud.githubusercontent.com/assets/1282364/11598582/6d392750-9a88-11e5-9839-05127dfba96b.gif)  |
-| Android |![Android Register](https://cloud.githubusercontent.com/assets/1282364/11598579/6d3487b8-9a88-11e5-9e95-260283a6951e.gif)    | ![Android Login](https://cloud.githubusercontent.com/assets/1282364/11598577/6d2f140e-9a88-11e5-8cd4-1ba8c9cbc603.gif)   |  ![Android Profile](https://cloud.githubusercontent.com/assets/1282364/11598578/6d314ee0-9a88-11e5-9a6c-512a313535ee.gif) |
+### Directory Layout
 
+```
+.
+├── /build/                     # The folder for compiled output
+├── /docs/                      # Documentation files for the project
+├── /node_modules/              # 3rd-party libraries and utilities
+├── /src/                       # The source code of the application
+│   ├── /actions/               # Action creators that allow to trigger a dispatch to stores
+│   ├── /api/                   # REST API / Relay endpoints
+│   ├── /components/            # React components
+│   ├── /constants/             # Constants (action types etc.)
+│   ├── /content/               # Static content (plain HTML or Markdown, Jade, you name it)
+│   ├── /core/                  # Core components (Flux dispatcher, base classes, utilities)
+│   ├── /decorators/            # Higher-order React components
+│   ├── /public/                # Static files which are copied into the /build/public folder
+│   ├── /stores/                # Stores contain the application state and logic
+│   ├── /utils/                 # Utility classes and functions
+│   ├── /app.js                 # Client-side startup script
+│   ├── /config.js              # Global application settings
+│   ├── /routes.js              # Universal (isomorphic) application routes
+│   └── /server.js              # Server-side startup script
+├── /tools/                     # Build automation scripts and utilities
+│   ├── /lib/                   # Library for utility snippets
+│   ├── /build.js               # Builds the project from source to output (build) folder
+│   ├── /bundle.js              # Bundles the web resources into package(s) through Webpack
+│   ├── /clean.js               # Cleans up the output (build) folder
+│   ├── /config.js              # Webpack configuration for application bundles
+│   ├── /copy.js                # Copies static files to output (build) folder
+│   ├── /deploy.js              # Deploys your web application
+│   ├── /serve.js               # Launches the Node.js/Express web server
+│   └── /start.js               # Launches the development web server with "live reload"
+│── package.json                # The list of 3rd party libraries and utilities
+└── preprocessor.js             # ES6 transpiler settings for Jest
+```
 
-----------
+### Getting Started
 
-## Summary
+Just clone the repo and start hacking:
 
-1. The application runs on **both iOS and Android** with a **single code** base
-1. A User can **Register, Login, Logout, Reset their Password** and modify their **Profile**
-1. The Forms display messages for **help and field validation**.
-1. The Forms are **protected** when fetching.
-1. The Forms display **spinner** when fetching.
-1. Form submission **errors are displayed** (see above Login)
-1. **All state changes*** are actions to the Redux store.
-1. The backend is provided by Parse.com using the **Rest API**
-1. **Every action** performed by the UI interfaces with the **Redux actions** and subsequently to the Redux Store.  This **reduces the complexity** of the JSX Components **tremendously**and makes them easily testable.
-1. **Jest Unit Tests cover 86%** of the application statements.
-1. Demonstrates how to **setup React-Native to perform Jest testing** with Babel.
-1. Includes ability to **debug Jest unit tests**with Chrome
-1. Instructions and videos for **continuous integration with Bitrise.io**
+```shell
+$ git clone -o react-starter-kit -b master --single-branch \
+      https://github.com/kriasoft/react-starter-kit.git MyApp
+$ cd MyApp
+$ npm install                   # Install Node.js components listed in ./package.json
+$ npm start                     # Compile and launch
+```
 
-----------
+### How to Build
 
-## Hot Reloading
-This video shows Snowflake exporting and importing state from Redux.  It demonstrates, with the iOS Simulator, the process of copying the state for import at a later time.  After the demo, I walk through the code to clarify how I achieved this.  It's assumed you have some familiarity with Redux.  Hopefully it helps you gain a better understanding of what Redux provides you!
+```shell
+$ npm run build                 # or, `npm run build -- release`
+```
 
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=b4eqQUA3O6o" target="_blank"><img src="http://img.youtube.com/vi/b4eqQUA3O6o/0.jpg" 
-alt="Snowflake Hot Loading" width="240" height="180" border="10" /></a>
+By default, it builds in a *debug* mode. If you need to build in a release
+mode, just add `-- release` flag. This will optimize the output bundle for
+production deployment.
 
-----------
+### How to Run
 
+```shell
+$ npm start                     # or, `npm start -- release`
+```
 
-## Continuous Integration 
+This will start a lightweight development server with "live reload" and
+synchronized browsing across multiple devices and browsers.
 
-CI proves to the developer that everything required to build and test
-the application is well defined and repeatable.  Without CI, one would
-not know, for a fact, that all the required tools and assests are
-available for everyone to build with.  CI gives us developers some
-"peace of mind" that our build process is repeatable.
+### How to Deploy
 
-With that in mind, please refer to the following document for
-instructions and 8 videos.
+```shell
+$ npm run deploy                # or, `npm run deploy -- production`
+```
 
-[CI - Videos And Instructions](docs/CI-BitRise.md)
+For more information see `tools/deploy.js`.
 
+### How to Update
 
-----------
+You can always fetch and merge the recent changes from this repo back into
+your own project:
 
+```shell
+$ git checkout master
+$ git fetch react-starter-kit
+$ git merge react-starter-kit/master
+$ npm install
+```
 
-######-barton hammond
+### How to Test
+
+Run unit tests powered by [Jest](https://facebook.github.io/jest/) with the following
+[npm](https://www.npmjs.org/doc/misc/npm-scripts.html) command:
+
+```shell
+$ npm test
+```
+
+Test any javascript module by creating a `__tests__/` directory where
+the file is. Name the test by appending `-test.js` to the js file.
+[Jest](https://facebook.github.io/jest/) will do the rest.
+
+### Related Projects
+
+  * [React Static Boilerplate](https://github.com/koistya/react-static-boilerplate) — Generates a static website from React components
+  * [Babel Starter Kit](https://github.com/kriasoft/babel-starter-kit) — A boilerplate for authoring JavaScript/React.js libraries
+  * [React Decorators](https://github.com/kriasoft/react-decorators) — A collection of higher-order React components
+
+### Learn More
+
+  * [Getting Started with React.js](http://facebook.github.io/react/)
+  * [Getting Started with GraphQL and Relay](https://quip.com/oLxzA1gTsJsE)
+  * [React.js Questions on StackOverflow](http://stackoverflow.com/questions/tagged/reactjs)
+  * [React.js Discussion Board](https://discuss.reactjs.org/)
+  * [Flux Architecture for Building User Interfaces](http://facebook.github.io/flux/)
+  * [Jest - Painless Unit Testing](http://facebook.github.io/jest/)
+  * [Flow - A static type checker for JavaScript](http://flowtype.org/)
+  * [The Future of React](https://github.com/reactjs/react-future)
+  * [Learn ES6](https://babeljs.io/docs/learn-es6/), [ES6 Features](https://github.com/lukehoban/es6features#readme)
+
+### Support
+
+  * [#react-starter-kit](https://gitter.im/kriasoft/react-starter-kit) on Gitter — Feedback, feature requests, Q&A
+  * [@koistya](https://www.codementor.io/koistya) on Codementor — Mentorship, code reviews
+  * support@kriasoft.com — Customization requests, help with GraphQL/Relay back-ends etc.
+
+### License
+
+Copyright © 2014-2015 Kriasoft, LLC. This source code is licensed under the MIT
+license found in the [LICENSE.txt](https://github.com/kriasoft/react-starter-kit/blob/master/LICENSE.txt)
+file. The documentation to the project is licensed under the
+[CC BY-SA 4.0](http://creativecommons.org/licenses/by-sa/4.0/) license.
+
+---
+Made with ♥ by Konstantin Tarkus ([@koistya](https://twitter.com/koistya)) and [contributors](https://github.com/kriasoft/react-starter-kit/graphs/contributors)
